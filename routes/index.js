@@ -137,8 +137,7 @@ const actions =           fb.collection(`${host}Actions`);
 const usersActions =      fb.collection(`${host}UsersActions`);
 const usersTaps =           fb.collection(`${host}UsersTaps`);
 
-// TBD: в релизе добавить проверку на develop
-if(process.env.develop) setInterval(()=>{
+if(!process.env.develop) setInterval(()=>{
     ifBefore(udb,{blocked:false}).then(users=>{
         users.forEach(u=>{
             udb.doc(u.id).update({
