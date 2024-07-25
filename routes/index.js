@@ -135,7 +135,8 @@ const messages =          fb.collection(`${host}UserMessages`);
 const logs =              fb.collection(`${host}Logs`);
 const actions =           fb.collection(`${host}Actions`);
 const usersActions =      fb.collection(`${host}UsersActions`);
-const usersTaps =           fb.collection(`${host}UsersTaps`);
+const usersTaps =         fb.collection(`${host}UsersTaps`);
+const channels =          fb.collection(`${host}Channels`);
 
 if(!process.env.develop) setInterval(()=>{
     ifBefore(udb,{blocked:false}).then(users=>{
@@ -215,6 +216,9 @@ function sendMessage(req,res,admin){
 }
 
 const datatypes = {
+    channels: {
+        col:    channels
+    },
     messages:{
         col:    messages,
         newDoc: sendMessage,
@@ -310,11 +314,45 @@ router.all(`/api/:method`,(req,res)=>{
                             if(!req.body.action) return res.status(400).send(`no action provided`);
                             return getDoc(actions,req.body.action).then(a=>{
                                 if(!a || !a.active) return res.status(404).send(`no such action available`);
+                                
                                 ifBefore(usersActions,{
-                                    user: +u.id
+                                    user: +u.id,
+                                    action: req.body.action
                                 }).then(col=>{
-                                    if(a.price){
-                                        if(col.length) return res.status(400).send(`user already participated`)
+                                    
+                                    if(col.length) return res.status(400).send(`user already participated`)
+
+                                    if(a.subscription){
+                                        ifBefore(channels).then(channels2check=>{
+                                            let proof = [];
+                                            channels2check.forEach(c=>{
+                                                proof.push(
+                                                    sendMessage2({
+                                                        chat_id: c.channelId,
+                                                        user_id: +u.id
+                                                    },`getChatMember`,token).then(d=> d.result.status !== `left`)
+                                                    .catch(err=>{
+                                                        return false
+                                                    })
+                                                )
+                                            }) 
+
+                                            Promise.all(proof).then(proof=>{
+                                                if(proof.indexOf(false)>-1){
+                                                    res.status(400).send(`Вы не подписаны на все необходимые каналы.`)
+                                                } else {
+                                                    usersActions.add({
+                                                        createdAt:  new Date(),
+                                                        user:       +u.id,
+                                                        action:     req.body.action,
+                                                        actionName: a.name
+                                                    }).then(rec=>{
+                                                        res.status(200).send(rec.id)
+                                                    })
+                                                }
+                                            })
+                                        })
+                                    } else if(a.price){
                                         if(u.score >= a.price){
                                             usersActions.add({
                                                 createdAt:  new Date(),
@@ -329,9 +367,7 @@ router.all(`/api/:method`,(req,res)=>{
                                             res.status(400).send(`insufficient funds`)
                                         }
                                     }
-                                    if(a.subscription){
-                                        res.status(200).send(`in progress`)
-                                    }
+                                    
                                 })
                             })
                         }
@@ -744,7 +780,21 @@ router.get(`/web`,(req,res)=>{
 
 
 
-
+router.get(`/test`,(req,res)=>{
+    if(req.query.user){
+        sendMessage2({
+            chat_id: -1001301449582,
+            user_id: +req.query.user
+        },`getChatMember`,token).then(d=>{
+            res.json(d)
+        }).catch(err=>{
+            res.status(400).send(err.message)
+        })
+    } else {
+        res.sendStatus(400)
+    }
+    
+})
 
 router.post(`/hook`,(req,res)=>{
     
@@ -755,6 +805,53 @@ router.post(`/hook`,(req,res)=>{
     let user = {};
 
     if (req.body.my_chat_member) {
+
+        if(req.body.my_chat_member.new_chat_member.status == 'administrator'){
+            if(req.body.my_chat_member.chat.type == `channel`){
+
+                devlog(req.body.my_chat_member.chat);
+
+                ifBefore(channels,{
+                    channelId:  req.body.my_chat_member.chat.id,
+                    active:     true
+                }).then(r=>{
+                    if(!r.length) {
+
+                        channels.add({
+                            active:             true,
+                            createdAt:          new Date(),
+                            name:               req.body.my_chat_member.chat.title,
+                            channelId:          req.body.my_chat_member.chat.id
+                        })
+
+                        // log({
+                        //     text:   `Бот добавлен в канал ${req.body.my_chat_member.chat.title}.`,
+                        //     channel: req.body.my_chat_member.chat.id
+                        // })
+                    } 
+                })
+            }
+        }
+
+        if(req.body.my_chat_member.new_chat_member.status == 'left'){
+            if(req.body.my_chat_member.chat.type == `channel`){
+                ifBefore(channels,{
+                        id: req.body.my_chat_member.chat.id,
+                        active: true
+                    }).then(r=>{
+                    r.forEach(rec=>{
+                        channels.doc(rec.id).update({
+                            active: false
+                        })
+                        log({
+                            text:       `Бот удален из канала ${rec.name}.`,
+                            channel:    rec.channelId
+                        })
+                    })
+                })
+            }
+        }
+
         if (req.body.my_chat_member.new_chat_member.status == 'kicked') {
 
             udb.doc(req.body.my_chat_member.chat.id.toString()).update({

@@ -11,6 +11,9 @@ function showUsers(){
 function showActions(){
     showScreen(`Задания`,`actions`,showActionLine,addAction)
 }
+function showChannels(){
+    showScreen(`Каналы бота`,`channels`,showChannelLine)
+}
 
 function showUserLine(u){
     let c = listContainer(u,true,{
@@ -213,6 +216,14 @@ function showAction(id){
 
         p.append(deleteButton(`actions`,id,!q.active))
     })
+}
+
+function showChannelLine(q){
+    let c = listContainer(q,true,{
+        id: `id`
+    });
+    c.append(ce(`h3`,false,`clickable`,q.name))
+    return c
 }
 
 function showActionLine(q){

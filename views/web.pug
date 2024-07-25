@@ -27,9 +27,10 @@ html
         .userData
           h3!= user.username ? `@${user.username}` : `${user.first_name} ${user.last_name}`.trim() 
         
-        h3(onclick="s(this),showActions()")         Задания
+        h3(onclick="s(this),showActions()")           Задания
+        h3(onclick="s(this),showChannels()")          Каналы
         br
-        h3(onclick="s(this),showUsers()")           Пользователи
+        h3(onclick="s(this),showUsers()")             Пользователи
         
     
     #menu(onclick="left.classList.toggle('active')")
