@@ -95,8 +95,8 @@ let gcp = initializeApp({
     credential: cert({
         "type": "service_account",
         "project_id": "randomclick6666",
-        "private_key_id": process.env.gcpId,
-        "private_key": process.env.gcpKey.replace(/\\n/g, '\n'),
+        "private_key_id":   process.env.gcpId,
+        "private_key":      process.env.gcpKey.replace(/\\n/g, '\n'),
         "client_email": "firebase-adminsdk-mgwhj@randomclick6666.iam.gserviceaccount.com",
         "client_id": "111351706144586346047",
         "auth_uri": "https://accounts.google.com/o/oauth2/auth",
@@ -233,6 +233,8 @@ const datatypes = {
     }
 }
 
+
+
 function newEntity(req,res,admin,extra){
     
     if(!req.body.name) return res.status(400).send(`no name`)
@@ -265,15 +267,20 @@ router.post(`/authWebApp`,(req,res)=>{
 })
 
 
+router.get(`/app`,(req,res)=>{
+    res.render(`app`)
+})
+
 router.all(`/api/:method`,(req,res)=>{
 
-    if(process.env.develop) req.signedCookies.userToken = req.query.token 
+    // if(process.env.develop) req.signedCookies.userToken = req.query.token 
 
     if (!req.signedCookies.userToken) return res.status(401).send(`Вы кто вообще?`);
     
     devlog(req.signedCookies.userToken)
 
     adminTokens.doc(req.signedCookies.userToken).get().then(doc => {
+        
         if (!doc.exists) return res.sendStatus(403)
     
         doc  = doc.data();
@@ -290,7 +297,8 @@ router.all(`/api/:method`,(req,res)=>{
                         taps: FieldValue.increment(1)
                     })
                     userScore(u.id, tapBounty)
-                    return res.sendStatus(200)
+                    
+                    return res.status(200).send(tapBounty.toString())
                 }
                 case `profile`:{
                     return ifBefore(usersActions,{user:+u.id}).then(actions=>{
