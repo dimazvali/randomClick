@@ -469,6 +469,34 @@ router.all(`/admin/:method/:id`,(req,res)=>{
                         })
                 }
 
+                case `actionStart`:{
+                    return getDoc(actions,req.params.id)
+                        .then(a=>{
+                            if(!a.active) res.status(400).send(`Акция не активна.`)
+                            if(a.winner) res.status(400).send(`Акция уже разыграна.`)
+                                ifBefore(usersActions,{action: req.params.id}).then(users=>{
+                                    if(!users.length) return res.status(400).send(`Недостаточно участников.`)
+                                    
+                                    let winner = shuffle(users)[0].user;
+                                    
+                                    actions.doc(req.params.id).update({
+                                        winner: winner
+                                    })    
+
+
+                                    sendMessage2({
+                                        chat_id: winner,
+                                        text: a.winnerText || `Поздравляем! Вы выиграли в розыгрыше ${a.name}.`
+                                    },false,token,messages)
+
+                                    res.status(200).send(`id ${winner}`)
+                                    
+                                }).catch(err=>{
+                                    res.status(400).send(err.message)
+                                })
+                        })
+                }
+
                 default:{
                     
                     if(!datatypes[req.params.method])  return res.sendStatus(404)
