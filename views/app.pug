@@ -55,7 +55,7 @@ html
             div(data-bind="attr:{class:active()?'active':'passive'}")
                 p.name(data-bind="text:name")
                 p.info(data-bind="text:description")
-                button(data-bind="attr:{disabled:active()?false:true}, event:{click:$parent.claim}, text: active() ? `Получить ${price()?`(${price()})`:''}` : 'Вы участвуете'") 
+                button(data-bind="attr:{disabled:active()?false:true}, event:{click:$parent.claim}, text: active() ? `Участвовать ${price()?`(${price()})`:''}` : 'Вы участвуете'") 
     .popup(data-bind="attr:{'data-hidden':active()!=`pump`?`hidden`:`reg`}")
         div.b.active(data-bind="html:`<span>👩🏻‍💻</span> ${username()}`")
         div.b(data-bind="html:`<span>💵</span> ${score()}`")
@@ -67,11 +67,11 @@ html
     
     table#footer
         tr
-            td#tapper(data-bind="event:{click:()=>setActive(`tapper`)}, attr:{'data-chosen':active()=='tapper'?true:false}") тап
-            td#refs(data-bind="event:{click:()=>setActive(`refs`)}, attr:{'data-chosen':active()=='refs'?true:false}") рефы
+            td#tapper(data-bind="event:{click:()=>setActive(`tapper`)}, attr:{'data-chosen':active()=='tapper'?true:false}") 🎯
+            td#refs(data-bind="event:{click:()=>setActive(`refs`)}, attr:{'data-chosen':active()=='refs'?true:false}") 👤
         tr
-            td#actions(data-bind="event:{click:()=>setActive(`actions`)}, attr:{'data-chosen':active()=='actions'?true:false}") акции
-            td#tapper(data-bind="event:{click:()=>setActive(`pump`)}, attr:{'data-chosen':active()=='pump'?true:false}") прокачка
+            td#actions(data-bind="event:{click:()=>setActive(`actions`)}, attr:{'data-chosen':active()=='actions'?true:false}") 🎁
+            td#tapper(data-bind="event:{click:()=>setActive(`pump`)}, attr:{'data-chosen':active()=='pump'?true:false}") ⚙️
     //- #footer
     //-     .flex
     //-         #tapper(data-bind="event:{click:()=>setActive(`tapper`)}, attr:{'data-chosen':active()=='tapper'?true:false}") тап
