@@ -313,7 +313,7 @@ router.all(`/api/:method`,(req,res)=>{
                         case `GET`:{
                             return pa({col:actions},{col:usersActions,f:{user:+u.id}}).then(data=>{
                                 res.json(data[0].map(a=>{
-                                    if(data[1].filter(passed=>passed.action == a.id)) a.passed = true;
+                                    if(data[1].filter(passed=>passed.action == a.id)[0]) a.passed = true;
                                     return a
                                 }))
                             })
@@ -487,7 +487,7 @@ router.all(`/admin/:method/:id`,(req,res)=>{
                                     sendMessage2({
                                         chat_id: winner,
                                         text: a.winnerText || `Поздравляем! Вы выиграли в розыгрыше ${a.name}.`
-                                    },false,token,messages)
+                                    },false,process.env.pdToken,messages)
 
                                     res.status(200).send(`id ${winner}`)
                                     
@@ -991,7 +991,7 @@ router.post(`/hook`,(req,res)=>{
                                 inline_keyboard:[[{
                                     text: `${ngrok}`,
                                     web_app:{
-                                        url: `${ngrok}/${host}/app` 
+                                        url: `${ngrok}/app` 
                                     }
                                 }]]
                             }

@@ -209,7 +209,7 @@ function showAction(id){
             p.append(winner)
             load(`users`,q.winner).then(u=>{
                 winner.innerHTML = uname(u,u.i)
-                winner.onclick = showUser(u.id)
+                winner.onclick = () => showUser(u.id)
             })
         } else {
             p.append(ce(`button`,false,false,`Стартовать`,{
@@ -219,7 +219,7 @@ function showAction(id){
                         this.remove()
                         axios.post(`/admin/actionStart/${id}`)
                             .then(s=>{
-                                alert(`Победил пользователь ${s}`)
+                                alert(`Победил пользователь ${s.data}`)
                             })
                             .catch(handleError)
                     }

@@ -48,10 +48,11 @@ function shimmer(light,tg){
 
 class Action{
     constructor(a){
-        this.name =     ko.observable(a.name)
-        this.description =     ko.observable(a.description)
-        this.active =   ko.observable(!a.passed)
-        this.price =    ko.observable(a.price || 0)
+        this.id =               a.id
+        this.name =             ko.observable(a.name)
+        this.description =      ko.observable(a.description)
+        this.active =           ko.observable(!a.passed)
+        this.price =            ko.observable(a.price || 0)
     }
 }
 
@@ -61,10 +62,8 @@ class Page{
         this.active =       ko.observable(`tapper`);
         
         this.actions = ko.observableArray(d.actions.map(a=>new Action(a)))
+        
         this.setActive = (v)=> {
-            
-            console.log(v);
-
             this.active(v)
         }
 
@@ -91,9 +90,13 @@ class Page{
                 })
         }
         this.claim = (a) => {
+            
+            console.log(a);
+            
             axios.post(`/api/actions/`,{
                 action: a.id
             }).then(s=>{
+                a.passed(true)
                 tg.showAlert(`ok!`)
             }).catch(err=>{
                 tg.showAlert(err.message)

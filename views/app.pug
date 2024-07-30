@@ -55,7 +55,7 @@ html
             div(data-bind="attr:{class:active()?'active':'passive'}")
                 p.name(data-bind="text:name")
                 p.info(data-bind="text:description")
-                button(data-bind="attr:{disabled:active()?false:true}, event:{click:()=>$parent.claim()}, text: active() ? `Получить ${price()?`(${price()})`:''}` : 'Вы участвуете'") 
+                button(data-bind="attr:{disabled:active()?false:true}, event:{click:$parent.claim}, text: active() ? `Получить ${price()?`(${price()})`:''}` : 'Вы участвуете'") 
     .popup(data-bind="attr:{'data-hidden':active()!=`pump`?`hidden`:`reg`}")
         div.b.active(data-bind="html:`<span>👩🏻‍💻</span> ${username()}`")
         div.b(data-bind="html:`<span>💵</span> ${score()}`")
