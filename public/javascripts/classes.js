@@ -96,7 +96,7 @@ class Page{
             axios.post(`/api/actions/`,{
                 action: a.id
             }).then(s=>{
-                a.passed(true)
+                a.active(false)
                 tg.showAlert(`ok!`)
             }).catch(err=>{
                 tg.showAlert(err.message)
