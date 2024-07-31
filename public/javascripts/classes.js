@@ -31,16 +31,42 @@ let app = initializeApp(firebaseConfig);
 let db = getDatabase(app)
 
 
-function showTap(event,tg){
-    console.log(event)
-    shimmer(true,tg);
-    let plus = ce(`div`,false,`flyer`,`+1`)
-    document.body.append(plus)
-    setTimeout(()=>{
-        plus.remove()
-    },900)
+function showTap(event, tg) {
+    console.log(event);
+    shimmer(true, tg);
+    
+    // Create the "+1" element
+    let plus = document.createElement('div');
+    plus.className = 'flyer';
+    plus.textContent = '+1';
+    
+    // Set random color
+    plus.style.color = getRandomColor();
+    
+    // Set random position within the viewport
+    const randomX = Math.random() * window.innerWidth;
+    const randomY = Math.random() * window.innerHeight;
+    plus.style.left = `${randomX}px`;
+    plus.style.top = `${randomY}px`;
+    
+    // Append to body
+    document.body.append(plus);
+    
+    // Remove after animation
+    setTimeout(() => {
+        plus.remove();
+    }, 900);
 }
 
+// Helper function to generate a random color
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 function shimmer(light,tg){
     if(light) return tg.HapticFeedback.impactOccurred('light')
     tg.HapticFeedback.notificationOccurred('success')
