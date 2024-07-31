@@ -51,6 +51,7 @@ img#tap {
 
 .flyer {
     position: absolute;
+    z-index:1001;
     font-size: 24px;
     font-weight: bold;
     animation: fadeMove 0.9s ease-out;
