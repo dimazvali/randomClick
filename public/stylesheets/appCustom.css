@@ -125,10 +125,23 @@ td {
 }
 
 .popup.coverScreen {
-    animation: none;
-    filter: opacity(1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 0 20px;
+    background: #181818;
+    overflow-y: auto;
+    box-sizing: border-box;
+    animation: slideRight 0s forwards;
+    filter: opacity(.3);
+    background-size: cover;
+    background-position: 50%;
     z-index: 1000;
-    transition: .5s;
 }
 
 .popup.coverScreen>img {
