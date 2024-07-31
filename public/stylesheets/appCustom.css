@@ -23,7 +23,7 @@ div#footer {
 }
 
 .b {
-    background: var(--tg-theme-hint-color);
+    background-color: #181818;
     margin-bottom: 10px;
     line-height: 30px;
     padding: 5px 5px;
