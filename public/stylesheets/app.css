@@ -45,7 +45,7 @@ h1, h2, h3, h4 {
     background: var(--tg-theme-secondary-bg-color);
     margin-bottom: 20px;
     border-radius: 20px;
-    transition: .3s;
+    transition: 0s;
     overflow: hidden;
     box-shadow: 2px 1px 4px -1px var(--tg-theme-hint-color);
     /* overflow-y: hidden; */
