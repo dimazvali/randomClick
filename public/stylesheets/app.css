@@ -79,7 +79,7 @@ div#popup {
     width: 100vw;
     height: 100vh;
     padding:  0 20px;
-    background: var(--tg-theme-bg-color);
+    background: #181818;
     overflow-y: auto;
     box-sizing: border-box;
     animation: slideRight 0s forwards;
