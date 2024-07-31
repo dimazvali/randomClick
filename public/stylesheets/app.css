@@ -82,7 +82,7 @@ div#popup {
     background: var(--tg-theme-bg-color);
     overflow-y: auto;
     box-sizing: border-box;
-    animation: slideRight .5s forwards;
+    animation: slideRight 0s forwards;
     filter: opacity(.3);
     background-size: cover;
     background-position: 50%;
@@ -507,7 +507,7 @@ img.coverS {
     padding: 20px;
     box-sizing: border-box;
     
-    animation: appear .3s forwards;
+    animation: appear 0s forwards;
     filter: opacity(0);
 }
 
