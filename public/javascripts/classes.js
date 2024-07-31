@@ -45,10 +45,6 @@ function showTap(event, tg) {
 
     // Get the position of the img#tap element
     const tapElement = document.getElementById('tap');
-    if (!tapElement) {
-        console.error('img#tap element not found');
-        return;
-    }
     const rect = tapElement.getBoundingClientRect();
 
     // Generate random position around the img#tap element
@@ -57,9 +53,6 @@ function showTap(event, tg) {
     plus.style.position = 'absolute';
     plus.style.left = `${randomX}px`;
     plus.style.top = `${randomY}px`;
-
-    // Log the position
-    console.log(`Positioning +1 at (${randomX}px, ${randomY}px)`);
 
     // Append to body
     document.body.append(plus);
@@ -79,6 +72,7 @@ function getRandomColor() {
     }
     return color;
 }
+
 
 
 
