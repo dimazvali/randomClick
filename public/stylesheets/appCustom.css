@@ -43,7 +43,7 @@ img#tap {
     background: black;
     background-blend-mode: hard-light;
     mix-blend-mode: lighten;
-    margin: 0 auto;
+    margin: auto;
     display: block;
 }
 
