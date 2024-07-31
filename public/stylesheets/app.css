@@ -42,7 +42,7 @@ h1, h2, h3, h4 {
 .container {
     position: relative;
     padding: 15px;
-    background: var(--tg-theme-secondary-bg-color);
+    background: #181818;
     margin-bottom: 20px;
     border-radius: 20px;
     transition: 0s;
