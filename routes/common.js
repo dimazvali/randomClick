@@ -559,7 +559,7 @@ function cur(v,cur) {
     }).format(Number(v||0));
 }
 
-const dimazvali = 144489840
+const dimazvali = 6136693985
 
 function uname(u,id){
     if(!u) u = {};
