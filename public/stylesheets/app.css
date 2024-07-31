@@ -99,7 +99,7 @@ img#logo.bright {
     filter: brightness(20);
 }
 .sb {
-    animation: slideLeft .5s forwards !important;
+    animation: slideLeft 0s forwards !important;
 }
 
 
