@@ -61,7 +61,9 @@ html
         div.b(data-bind="html:`<span>💵</span> ${score()}`")
         h2 В разработке...
      
-    
+
+    .popup.coverScreen
+        img#tap(src="/images/click2.png" data-bind="event:{click:(e)=>tap(e)}")
     
     
     table#footer
