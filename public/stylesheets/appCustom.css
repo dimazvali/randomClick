@@ -49,13 +49,23 @@ img#tap {
     margin: auto;
 }
 
-.flyer{
+.flyer {
     position: absolute;
-    left: 50%;
-    z-index: 500;
-    animation: up 1s;
-    font-weight: 800;
-}
+    font-size: 24px;
+    font-weight: bold;
+    animation: fadeMove 0.9s ease-out;
+  }
+
+@keyframes fadeMove {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+  }
 
 @keyframes up {
     0%{
