@@ -42,6 +42,7 @@ img#tap {
     border-radius: 50%;
     background: black;
     background-blend-mode: hard-light;
+    margin: auto;
     mix-blend-mode: lighten;
     margin: auto;
     display: block;
