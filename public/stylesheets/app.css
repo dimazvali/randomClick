@@ -73,10 +73,6 @@ h1, h2, h3, h4 {
 
 div.popup,
 div#popup {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     position: fixed;
     top: 0;
     left: 0;
