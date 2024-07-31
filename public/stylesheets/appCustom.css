@@ -5,7 +5,7 @@ div#footer {
     width: -webkit-fill-available;
     color: var(--tg-theme-button-text-color);
     z-index: 20;
-    background: var(--tg-theme-secondary-bg-color);
+    background: #181818;
     padding: 20px;
     border-radius: 20px;
     box-sizing: border-box;
