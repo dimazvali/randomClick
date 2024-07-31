@@ -121,8 +121,7 @@ td {
 }
 
 [data-chosen] {
-    background: var(--tg-theme-bg-color);
-    border: 1px solid var(--tg-theme-secondary-bg-color);
+    background: #222222;
 }
 
 .popup.coverScreen {
