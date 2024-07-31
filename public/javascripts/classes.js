@@ -43,9 +43,13 @@ function showTap(event, tg) {
     // Set random color
     plus.style.color = getRandomColor();
     
-    // Set random position within the viewport
-    const randomX = Math.random() * window.innerWidth;
-    const randomY = Math.random() * window.innerHeight;
+    // Get the target image element
+    const targetImage = document.getElementById('targetImage');
+    const rect = targetImage.getBoundingClientRect();
+    
+    // Calculate random position within 50 pixels around the image
+    const randomX = rect.left + Math.random() * (rect.width + 100) - 50;
+    const randomY = rect.top + Math.random() * (rect.height + 100) - 50;
     plus.style.left = `${randomX}px`;
     plus.style.top = `${randomY}px`;
     
