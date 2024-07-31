@@ -34,24 +34,29 @@ let db = getDatabase(app)
 function showTap(event, tg) {
     console.log(event);
     shimmer(true, tg);
-    
+
     // Create the "+1" element
     let plus = document.createElement('div');
     plus.className = 'flyer';
     plus.textContent = '+1';
-    
+
     // Set random color
     plus.style.color = getRandomColor();
-    
-    // Set random position within the viewport
-    const randomX = Math.random() * window.innerWidth/4;
-    const randomY = Math.random() * window.innerHeight/4;
+
+    // Get the position of the img#tap element
+    const tapElement = document.getElementById('tap');
+    const rect = tapElement.getBoundingClientRect();
+
+    // Generate random position around the img#tap element
+    const randomX = rect.left + (Math.random() * rect.width) - (rect.width / 2);
+    const randomY = rect.top + (Math.random() * rect.height) - (rect.height / 2);
+    plus.style.position = 'absolute';
     plus.style.left = `${randomX}px`;
     plus.style.top = `${randomY}px`;
-    
+
     // Append to body
     document.body.append(plus);
-    
+
     // Remove after animation
     setTimeout(() => {
         plus.remove();
@@ -67,6 +72,8 @@ function getRandomColor() {
     }
     return color;
 }
+
+
 function shimmer(light,tg){
     if(light) return tg.HapticFeedback.impactOccurred('light')
     tg.HapticFeedback.notificationOccurred('success')
