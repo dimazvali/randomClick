@@ -104,7 +104,7 @@ table#footer {
     width: calc(100% - 40px);
     text-align: center;
     line-height: 40px;
-    background: var(--tg-theme-secondary-bg-color);
+    background: #1f1f1f;
     box-sizing: border-box;
     border-radius: 20px;
     /* border: 1px solid; */
@@ -113,7 +113,9 @@ table#footer {
 }
 
 td {
-    border: 1px solid var(--tg-theme-bg-color);
+    background: #222222;
+    width: 100%;
+    align-items: center;
     width: 50%;
     transition: .5s;
 }
