@@ -45,14 +45,24 @@ function showTap(event, tg) {
 
     // Get the position of the img#tap element
     const tapElement = document.getElementById('tap');
+    if (!tapElement) {
+        console.error('img#tap element not found');
+        return;
+    }
     const rect = tapElement.getBoundingClientRect();
 
-    // Generate random position around the img#tap element
-    const randomX = rect.left + (Math.random() * rect.width) - (rect.width / 2);
-    const randomY = rect.top + (Math.random() * rect.height) - (rect.height / 2);
+    // Define the boundary range around the img#tap element
+    const boundary = 50; // Adjust this value as needed
+
+    // Generate random position within the boundary around the img#tap element
+    const randomX = rect.left + rect.width / 2 + (Math.random() * boundary * 2 - boundary);
+    const randomY = rect.top + rect.height / 2 + (Math.random() * boundary * 2 - boundary);
     plus.style.position = 'absolute';
     plus.style.left = `${randomX}px`;
     plus.style.top = `${randomY}px`;
+
+    // Log the position
+    console.log(`Positioning +1 at (${randomX}px, ${randomY}px)`);
 
     // Append to body
     document.body.append(plus);
