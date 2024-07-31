@@ -1,8 +1,16 @@
 body{
     padding: 10px;
-    color: var(--tg-theme-text-color);
-    font-family: 'Open sans', sans-serif;
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #181818;
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    user-select: none;
+    overflow: hidden;
 }
 
 
@@ -83,6 +91,7 @@ div#popup {
 }
 
 img#logo {
+    user-select: none;
     width: 100%;
     filter: brightness(1);
     transition: .5s;
